@@ -2,14 +2,58 @@ import { useRef, useState } from "react";
 import ReactPlayer from "react-player/lazy";
 import classes from "./VideoPlayer.module.css";
 
+const tryParseDefaultSpeed = (speedParam: string | null) => {
+  if (!speedParam) {
+    return 1;
+  }
+
+  const speed = parseFloat(speedParam as string);
+  if (!isNaN(speed)) {
+    const s = Math.max(0.5, Math.min(speed, 1));
+    pushSpeedHistory(s);
+    return s;
+  }
+
+  return 1;
+};
+
+const pushSpeedHistory = (speed: number | string) => {
+  if ("URLSearchParams" in window) {
+    const url = new URL(window.location);
+    url.searchParams.set("s", speed.toString());
+    history.pushState(null, "", url);
+  }
+};
+
+const tryGetVideoUrl = (urlInput: string | null) => {
+  if (!urlInput) {
+    return "";
+  }
+
+  if (urlInput.startsWith("https://www.youtube.com")) {
+    return urlInput;
+  }
+
+  const fallback = new URL("https://www.youtube.com/watch");
+  fallback.searchParams.set("v", urlInput);
+  return fallback.href;
+};
+
 export const VideoPlayer = () => {
-  const handleClick = () => {};
-  const [speed, setSpeed] = useState(1);
+  const urlParams = new URLSearchParams(window.location.search);
+  const videoUrl = tryGetVideoUrl(urlParams.get("u"));
+  const defaultSpeed = tryParseDefaultSpeed(urlParams.get("s"));
+  const [speed, setSpeed] = useState(defaultSpeed);
+
+  const handleSpeedChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSpeed(parseFloat(e.target.value));
+    pushSpeedHistory(e.target.value);
+  };
 
   return (
     <div className={classes.container}>
       <ReactPlayer
-        url="https://www.youtube.com/watch?v=O2IuJPh6h_A"
+        url={videoUrl}
         width={"100%"}
         controls
         playbackRate={speed}
@@ -21,7 +65,7 @@ export const VideoPlayer = () => {
         step="0.05"
         list="markers"
         className={classes.rangeInput}
-        onChange={(e) => setSpeed(parseFloat(e.target.value))}
+        onChange={handleSpeedChange}
         value={speed}
       />
       <datalist id="markers" className={classes.rangeLabels}>
