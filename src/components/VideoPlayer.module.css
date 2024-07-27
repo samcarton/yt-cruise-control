@@ -4,7 +4,7 @@
   align-items: center;
   gap: 1rem;
 }
-
+/* style range inputs: https://www.smashingmagazine.com/2021/12/create-custom-range-input-consistent-browsers/ */
 .rangeInput {
   -webkit-appearance: none;
   appearance: none;
