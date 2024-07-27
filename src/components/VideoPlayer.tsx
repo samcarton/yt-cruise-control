@@ -4,7 +4,7 @@ import classes from "./VideoPlayer.module.css";
 
 const replaceSpeedHistory = (speed: number | string) => {
   if ("URLSearchParams" in window) {
-    const url = new URL(window.location);
+    const url = new URL(window.location as unknown as string);
     url.searchParams.set("s", speed.toString());
     history.replaceState(null, "", url);
   }
