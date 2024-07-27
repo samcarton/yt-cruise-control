@@ -4,7 +4,7 @@ import Card from "../components/Card.astro";
 import { VideoPlayer } from "../components/VideoPlayer";
 ---
 
-<Layout title="Page title">
+<Layout title="Cruise CONTROL">
   <main>
     <!-- <svg
       class="astro-a"
@@ -35,102 +35,133 @@ import { VideoPlayer } from "../components/VideoPlayer";
       </defs>
     </svg> -->
     <h1>Cruise <span class="text-gradient">CONTROL</span></h1>
-    <!-- <p class="instructions">
-      To get started, open the directory <code>src/pages</code> in your project.
-    </p> -->
-    <form action="/play">
+    <div class="instructions">
+      <p>
+        Cruise <strong>CONTROL</strong> is a simple speed and loop control for YouTube
+        videos.
+      </p>
+      <p>Enter either the full video URL or the ID to get started.</p>
+    </div>
+
+    <form id="form" action="/play" class="form">
       <input
+        class="input"
         type="text"
         id="query"
         name="v"
         placeholder="Enter URL or Video ID"
+        required
       />
-      <br />
-      <input type="submit" value="Let's Cruise" />
+      <input type="submit" value="Let's Cruise" class="button" role="button" />
     </form>
-    <!-- <ul role="list" class="link-card-grid">
-      <Card
-        href="https://docs.astro.build/"
-        title="Documentation"
-        body="Learn how Astro works and explore the official API docs."
-      />
-      <Card
-        href="https://astro.build/integrations/"
-        title="Integrations"
-        body="Supercharge your project with new frameworks and libraries."
-      />
-      <Card
-        href="https://astro.build/themes/"
-        title="Themes"
-        body="Explore a galaxy of community-built starter themes."
-      />
-      <Card
-        href="https://astro.build/chat/"
-        title="Community"
-        body="Come say hi to our amazing Discord community. ❤️"
-      />
-    </ul> -->
   </main>
-</Layout>
 
-<style>
-  main {
-    margin: auto;
-    padding: 1rem;
-    width: 800px;
-    max-width: calc(100% - 2rem);
-    color: white;
-    font-size: 20px;
-    line-height: 1.6;
-  }
-  .astro-a {
-    position: absolute;
-    top: -32px;
-    left: 50%;
-    transform: translatex(-50%);
-    width: 220px;
-    height: auto;
-    z-index: -1;
-  }
-  h1 {
-    font-size: 4rem;
-    font-weight: 700;
-    line-height: 1;
-    text-align: center;
-    margin-bottom: 1em;
-  }
-  .text-gradient {
-    background-image: var(--accent-gradient);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-size: 400%;
-    background-position: 0%;
-  }
-  .instructions {
-    margin-bottom: 2rem;
-    border: 1px solid rgba(var(--accent-light), 25%);
-    background: linear-gradient(
-      rgba(var(--accent-dark), 66%),
-      rgba(var(--accent-dark), 33%)
+  <script>
+    const form = document.querySelector("form");
+    form?.addEventListener(
+      "invalid",
+      function (event) {
+        event.preventDefault();
+        (event.target as HTMLInputElement).focus?.();
+        (event.target as HTMLInputElement).classList.add("required");
+      },
+      true
     );
-    padding: 1.5rem;
-    border-radius: 8px;
-  }
-  .instructions code {
-    font-size: 0.8em;
-    font-weight: bold;
-    background: rgba(var(--accent-light), 12%);
-    color: rgb(var(--accent-light));
-    border-radius: 4px;
-    padding: 0.3em 0.4em;
-  }
-  .instructions strong {
-    color: rgb(var(--accent-light));
-  }
-  .link-card-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(24ch, 1fr));
-    gap: 2rem;
-    padding: 0;
-  }
-</style>
+    form?.addEventListener("submit", function (event) {
+      if (!this.checkValidity()) {
+        event.preventDefault();
+      }
+    });
+  </script>
+  <style>
+    main {
+      margin: auto;
+      padding: 1rem;
+      width: 800px;
+      max-width: calc(100% - 2rem);
+      color: white;
+      font-size: 16px;
+      line-height: 1.6;
+    }
+    h1 {
+      font-size: 4rem;
+      font-weight: 700;
+      line-height: 1;
+      text-align: center;
+      margin-bottom: 1em;
+    }
+    .text-gradient {
+      background-image: var(--accent-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-size: 400%;
+      background-position: 0%;
+    }
+    .instructions {
+      margin-bottom: 2rem;
+      border: 1px solid rgb(var(--accent-dark));
+      background: linear-gradient(
+        rgba(var(--accent-dark), 33%),
+        rgba(var(--accent-dark), 5%)
+      );
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+    }
+    .instructions strong {
+      color: rgb(var(--accent-light));
+    }
+    .link-card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(24ch, 1fr));
+      gap: 2rem;
+      padding: 0;
+    }
+    .form {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2rem;
+    }
+    .input {
+      padding: 6px 12px;
+      background: rgb(31, 32, 35);
+      border: 1px solid rgb(60, 63, 68);
+      border-radius: 4px;
+      font-size: 13px;
+      color: rgb(247, 248, 248);
+      height: 46px;
+      max-width: calc(100% - 4rem);
+      width: 100%;
+      appearance: none;
+      transition: border 0.15s ease 0s;
+      &:focus {
+        outline: none;
+        box-shadow: none;
+        border-color: rgb(var(--accent));
+      }
+      &.required:invalid {
+        border-color: rgb(var(--color-invalid));
+      }
+    }
+    .button {
+      display: inline-block;
+      outline: 0;
+      border: 0;
+      cursor: pointer;
+      background: rgb(var(--accent-dark));
+      color: #ffffff;
+      border-radius: 8px;
+      padding: 14px 24px 16px;
+      font-size: 18px;
+      font-weight: 700;
+      line-height: 1;
+      transition:
+        transform 200ms,
+        background 200ms;
+      &:hover {
+        transform: translateY(-2px);
+      }
+    }
+  </style>
+</Layout>
