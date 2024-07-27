@@ -2,6 +2,14 @@ import { useRef, useState } from "react";
 import ReactPlayer from "react-player/lazy";
 import classes from "./VideoPlayer.module.css";
 
+const replaceSpeedHistory = (speed: number | string) => {
+  if ("URLSearchParams" in window) {
+    const url = new URL(window.location);
+    url.searchParams.set("s", speed.toString());
+    history.replaceState(null, "", url);
+  }
+};
+
 const tryParseDefaultSpeed = (speedParam: string | null) => {
   if (!speedParam) {
     return 1;
@@ -10,19 +18,11 @@ const tryParseDefaultSpeed = (speedParam: string | null) => {
   const speed = parseFloat(speedParam as string);
   if (!isNaN(speed)) {
     const s = Math.max(0.5, Math.min(speed, 1));
-    pushSpeedHistory(s);
+    replaceSpeedHistory(s);
     return s;
   }
 
   return 1;
-};
-
-const pushSpeedHistory = (speed: number | string) => {
-  if ("URLSearchParams" in window) {
-    const url = new URL(window.location);
-    url.searchParams.set("s", speed.toString());
-    history.pushState(null, "", url);
-  }
 };
 
 const tryGetVideoUrl = (urlInput: string | null) => {
@@ -41,13 +41,13 @@ const tryGetVideoUrl = (urlInput: string | null) => {
 
 export const VideoPlayer = () => {
   const urlParams = new URLSearchParams(window.location.search);
-  const videoUrl = tryGetVideoUrl(urlParams.get("u"));
+  const videoUrl = tryGetVideoUrl(urlParams.get("v"));
   const defaultSpeed = tryParseDefaultSpeed(urlParams.get("s"));
   const [speed, setSpeed] = useState(defaultSpeed);
 
   const handleSpeedChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSpeed(parseFloat(e.target.value));
-    pushSpeedHistory(e.target.value);
+    replaceSpeedHistory(e.target.value);
   };
 
   return (
