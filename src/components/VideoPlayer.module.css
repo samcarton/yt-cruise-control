@@ -2,8 +2,22 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: stretch;
   gap: 1rem;
 }
+
+.responsiveWrapper {
+  width: 100%;
+  position: relative;
+  padding-top: 56.25%; /* Player ratio: 100 / (1280 / 720) */
+}
+
+.player {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
 /* style range inputs: https://www.smashingmagazine.com/2021/12/create-custom-range-input-consistent-browsers/ */
 .rangeInput {
   -webkit-appearance: none;
@@ -22,7 +36,7 @@
   /***** Chrome, Safari, Opera and Edge Chromium styles *****/
   /* slider track */
   &::-webkit-slider-runnable-track {
-    background-color: rgb(49, 10, 101);
+    background-color: rgb(var(--accent-dark), 25%);
     border-radius: 0.5rem;
     height: 0.5rem;
   }
@@ -34,22 +48,22 @@
     margin-top: -12px; /* Centers thumb on the track */
 
     /*custom styles*/
-    background-color: rgb(136, 58, 234);
+    background: var(--accent-gradient);
     height: 2rem;
     width: 2rem;
-    border-radius: 20%;
+    border-radius: 50%;
   }
 
   &:focus::-webkit-slider-thumb {
-    border: 1px solid rgb(49, 10, 101);
-    outline: 3px solid rgb(49, 10, 101);
+    border: 1px solid rgb(var(--accent));
+    outline: 3px solid rgb(var(--accent));
     outline-offset: 0.125rem;
   }
 
   /******** Firefox styles ********/
   /* slider track */
   &::-moz-range-track {
-    background-color: rgb(49, 10, 101);
+    background-color: rgb(var(--accent-dark));
     border-radius: 0.5rem;
     height: 0.5rem;
   }
@@ -60,14 +74,14 @@
     border-radius: 0; /*Removes default border-radius that FF applies*/
 
     /*custom styles*/
-    background-color: rgb(49, 10, 101);
+    background-color: rgb(var(--accent-dark));
     height: 2rem;
     width: 1rem;
   }
 
   &:focus::-moz-range-thumb {
-    border: 1px solid rgb(49, 10, 101);
-    outline: 3px solid rgb(49, 10, 101);
+    border: 1px solid rgb(var(--accent-dark));
+    outline: 3px solid rgb(var(--accent-dark));
     outline-offset: 0.125rem;
   }
 }

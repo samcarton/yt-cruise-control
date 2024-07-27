@@ -1,5 +1,5 @@
-import { useRef, useState } from "react";
-import ReactPlayer from "react-player/lazy";
+import { useState } from "react";
+import ReactPlayer from "react-player";
 import classes from "./VideoPlayer.module.css";
 
 const replaceSpeedHistory = (speed: number | string) => {
@@ -52,12 +52,16 @@ export const VideoPlayer = () => {
 
   return (
     <div className={classes.container}>
-      <ReactPlayer
-        url={videoUrl}
-        width={"100%"}
-        controls
-        playbackRate={speed}
-      />
+      <div className={classes.responsiveWrapper}>
+        <ReactPlayer
+          url={videoUrl}
+          width={"100%"}
+          height={"100%"}
+          controls
+          playbackRate={speed}
+          className={classes.player}
+        />
+      </div>
       <input
         type="range"
         min="0.5"
