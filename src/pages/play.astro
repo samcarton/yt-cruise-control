@@ -1,43 +1,37 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import { VideoPlayer } from "../components/VideoPlayer";
+import Button from "../components/Button.astro";
+import SmallHeader from "../components/SmallHeader.astro";
+import Footer from "../components/Footer.astro";
 ---
 
 <Layout title="Cruisin">
   <main>
-    <h2>Cruise <span class="text-gradient">CONTROL</span></h2>
+    <SmallHeader />
     <VideoPlayer client:only="react" />
     <div class="instructions">
-      <p>☝️ Adjust playback speed using the slider above.</p><p>
+      <p>☝️ Adjust playback speed using the slider above.</p>
+      <p>
         🔖 Bookmark this page to come back to the same video at the same speed.
       </p>
     </div>
+    <div class="new-cruise">
+      <Button value="New Cruise" href="/" />
+    </div>
+    <Footer />
   </main>
 </Layout>
 
 <style>
   main {
     margin: auto;
-    padding: 0.5rem 1rem;
+    padding: 0 1rem;
     width: 800px;
     max-width: calc(100% - 2rem);
     color: white;
     font-size: 16px;
     line-height: 1.6;
-  }
-  h2 {
-    font-size: 2rem;
-    font-weight: 700;
-    line-height: 1;
-    text-align: center;
-    margin-bottom: 1em;
-  }
-  .text-gradient {
-    background-image: var(--accent-gradient-short);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-size: 400%;
-    background-position: 0%;
   }
   .instructions {
     margin-block: 2rem;
@@ -52,10 +46,8 @@ import { VideoPlayer } from "../components/VideoPlayer";
   .instructions strong {
     color: rgb(var(--accent-light));
   }
-  .link-card-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(24ch, 1fr));
-    gap: 2rem;
-    padding: 0;
+  .new-cruise {
+    display: flex;
+    justify-content: center;
   }
 </style>

@@ -1,0 +1,44 @@
+---
+import { GithubIcon } from "./GithubIcon";
+---
+
+<footer>
+  <p>
+    Made with ❤️ by{" "}
+    <a href="https://www.samcarton.com" target="_blank"> Sam Carton </a>
+  </p>
+  <div class="links-flex">
+    <a href="/">Home</a>
+    <p>|</p>
+    <a href="/licenses">Licenses</a>
+    <p>|</p>
+    <a href="https://github.com/samcarton/yt-cruise-control" target="_blank"
+      ><GithubIcon /></a
+    >
+  </div>
+</footer>
+<style>
+  a {
+    color: rgb(var(--accent));
+  }
+
+  .links-flex {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  footer {
+    margin: 4rem 0 1rem;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+
+    p {
+      margin: 0;
+    }
+  }
+</style>

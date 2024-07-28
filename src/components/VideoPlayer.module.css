@@ -25,8 +25,9 @@
   background: transparent;
   cursor: pointer;
 
-  width: calc(100% - 1rem);
-  margin: 0;
+  /* width: calc(100% - 2.25rem); */
+  width: 100%;
+  margin: 1rem 0 0 0;
 
   /* Removes default focus */
   &:focus {
@@ -63,7 +64,7 @@
   /******** Firefox styles ********/
   /* slider track */
   &::-moz-range-track {
-    background-color: rgb(var(--accent-dark));
+    background-color: rgb(var(--accent-dark), 25%);
     border-radius: 0.5rem;
     height: 0.5rem;
   }
@@ -74,9 +75,10 @@
     border-radius: 0; /*Removes default border-radius that FF applies*/
 
     /*custom styles*/
-    background-color: rgb(var(--accent-dark));
+    background: var(--accent-gradient);
     height: 2rem;
-    width: 1rem;
+    width: 2rem;
+    border-radius: 50%;
   }
 
   &:focus::-moz-range-thumb {
@@ -92,7 +94,10 @@
   justify-content: space-between;
   width: 100%;
 
-  option {
+  & div {
     padding: 0;
+    flex: 1;
+    text-align: center;
+    min-width: 0;
   }
 }

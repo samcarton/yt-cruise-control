@@ -1,5 +1,7 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import Button from "../components/Button.astro";
+import Footer from "../components/Footer.astro";
 ---
 
 <Layout title="Cruise CONTROL">
@@ -22,8 +24,9 @@ import Layout from "../layouts/Layout.astro";
         placeholder="Enter URL or Video ID"
         required
       />
-      <input type="submit" value="Let's Cruise" class="button" role="button" />
+      <Button as="input" value="Let's Cruise" />
     </form>
+    <Footer />
   </main>
 
   <script>
@@ -35,7 +38,7 @@ import Layout from "../layouts/Layout.astro";
         (event.target as HTMLInputElement).focus?.();
         (event.target as HTMLInputElement).classList.add("required");
       },
-      true
+      true,
     );
     form?.addEventListener("submit", function (event) {
       if (!this.checkValidity()) {
@@ -112,25 +115,6 @@ import Layout from "../layouts/Layout.astro";
       }
       &.required:invalid {
         border-color: rgb(var(--color-invalid));
-      }
-    }
-    .button {
-      display: inline-block;
-      outline: 0;
-      border: 0;
-      cursor: pointer;
-      background: rgb(var(--accent-light));
-      color: #ffffff;
-      border-radius: 8px;
-      padding: 14px 24px 16px;
-      font-size: 18px;
-      font-weight: 700;
-      line-height: 1;
-      transition:
-        transform 200ms,
-        background 200ms;
-      &:hover {
-        transform: translateY(-2px);
       }
     }
   </style>

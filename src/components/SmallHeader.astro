@@ -1,0 +1,24 @@
+---
+import { GaugeIcon } from "./GaugeIcon";
+---
+<header><GaugeIcon/><h1>Cruise <span class="text-gradient">CONTROL</span></h1></header> 
+<style>
+    header{
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  h1 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    line-height: 1;
+    text-align: left;
+  }
+  .text-gradient {
+    background-image: var(--accent-gradient-short);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-size: 400%;
+    background-position: 0%;
+  }
+</style>

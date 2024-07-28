@@ -1,0 +1,36 @@
+---
+interface Props {
+  value: string;
+  as?: 'a'|'input';
+  href?: string;
+}
+
+const { as = 'a', value, href } = Astro.props;
+---
+{as === 'a' ? (
+  <a href={href} class="button" role="button">{value}</button>
+) : (
+  <input type="submit" value={value} class="button" role="button" />
+)}
+<style>
+.button {
+    text-decoration: none;
+    display: inline-block;
+    outline: 0;
+    border: 0;
+    cursor: pointer;
+    background: rgb(var(--accent-light));
+    color: #ffffff;
+    border-radius: 8px;
+    padding: 14px 24px 16px;
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 1;
+    transition:
+      transform 200ms,
+      background 200ms;
+    &:hover {
+      transform: translateY(-2px);
+    }
+  }
+</style>

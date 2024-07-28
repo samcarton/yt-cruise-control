@@ -34,6 +34,16 @@ const tryGetVideoUrl = (urlInput: string | null) => {
     return urlInput;
   }
 
+  if (urlInput.startsWith("https://youtu.be")) {
+    // regex to extract the video ID from: https://youtu.be/sjgtpKxhZa4?si=lhbg5O4yeHiABClV
+    const videoId = urlInput.match(
+      /(?:\?v=|&v=|youtu\.be\/)(.*?)(?:\?|$)/,
+    )?.[1];
+    if (videoId) {
+      urlInput = videoId;
+    }
+  }
+
   const fallback = new URL("https://www.youtube.com/watch");
   fallback.searchParams.set("v", urlInput);
   return fallback.href;
@@ -72,14 +82,19 @@ export const VideoPlayer = () => {
         onChange={handleSpeedChange}
         value={speed}
       />
-      <datalist id="markers" className={classes.rangeLabels}>
-        <option value="0.5" label="50%"></option>
-        <option value="0.60" label="60%"></option>
-        <option value="0.70" label="70%"></option>
-        <option value="0.80" label="80%"></option>
-        <option value="0.90" label="90%"></option>
-        <option value="1" label="100%"></option>
-      </datalist>
+      <div className={classes.rangeLabels}>
+        <div>50%</div>
+        <div></div>
+        <div>60%</div>
+        <div></div>
+        <div>70%</div>
+        <div></div>
+        <div>80%</div>
+        <div></div>
+        <div>90%</div>
+        <div></div>
+        <div>100%</div>
+      </div>
     </div>
   );
 };
