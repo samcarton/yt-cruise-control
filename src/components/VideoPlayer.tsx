@@ -84,6 +84,7 @@ export const VideoPlayer = () => {
         className={classes.rangeInput}
         onChange={handleSpeedChange}
         value={speed}
+        aria-label="Playback speed"
       />
       <div className={classes.rangeLabels}>
         <div>50%</div>
