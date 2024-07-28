@@ -6,6 +6,33 @@ import Footer from "../components/Footer.astro";
 
 <Layout title="Cruise CONTROL">
   <main>
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      class="big-gauge"
+    >
+      <path d="m12 14 4-4" stroke="url(#paint0_linear_1805_24383)"></path>
+      <path
+        d="M3.34 19a10 10 0 1 1 17.32 0"
+        stroke="url(#paint0_linear_1805_24383)"></path>
+      <defs>
+        <linearGradient
+          id="paint0_linear_1805_24383"
+          gradientTransform="rotate(90)"
+        >
+          <stop offset="5%" stop-color="rgb(255, 110, 106)" stop-opacity="0.5"
+          ></stop>
+          <stop offset="95%" stop-color="rgb(255, 63, 138)" stop-opacity="0.1"
+          ></stop>
+        </linearGradient>
+      </defs>
+    </svg>
     <h1>Cruise <span class="text-gradient">CONTROL</span></h1>
     <div class="instructions">
       <p>
@@ -55,6 +82,15 @@ import Footer from "../components/Footer.astro";
       color: white;
       font-size: 16px;
       line-height: 1.6;
+    }
+    .big-gauge {
+      position: absolute;
+      top: -20px;
+      left: 50%;
+      transform: translatex(-50%);
+      width: 220px;
+      height: auto;
+      z-index: -1;
     }
     h1 {
       font-size: 4rem;
