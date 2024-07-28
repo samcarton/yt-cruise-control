@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import ReactPlayer from "react-player";
 import classes from "./VideoPlayer.module.css";
 
@@ -53,28 +53,101 @@ const tryGetVideoUrl = (urlInput: string | null) => {
 };
 
 export const VideoPlayer = () => {
+  const playerRef = useRef<ReactPlayer | null>(null);
   const urlParams = new URLSearchParams(window.location.search);
   const videoUrl = tryGetVideoUrl(urlParams.get("v"));
+
+  const [duration, setDuration] = useState(99999);
+  const handleDuration = (duration: number) => {
+    setDuration(duration);
+    setLoopTo(duration);
+  };
+
+  // #region Speed
   const defaultSpeed = tryParseDefaultSpeed(urlParams.get("s"));
   const [speed, setSpeed] = useState(defaultSpeed);
-
   const handleSpeedChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSpeed(parseFloat(e.target.value));
     replaceSpeedHistory(e.target.value);
   };
 
+  // #endregion
+
+  // #region loop
+  const [isLooping, setIsLooping] = useState(false);
+  const [loopFrom, setLoopFrom] = useState<number | null>(null);
+  const [loopTo, setLoopTo] = useState<number | null>(null);
+  const minLoopSeconds = 2;
+  const hasValidLoopingValues = loopFrom !== null && loopTo !== null;
+
+  const handleProgress = (state: { played: number; playedSeconds: number }) => {
+    if (!isLooping || loopFrom === null || loopTo === null) {
+      return;
+    }
+
+    if (state.playedSeconds > loopTo) {
+      playerRef.current?.seekTo(loopFrom);
+      // playing=true needs to be set on the player otherwise it pauses after seeking
+    }
+  };
+
+  const handleSetLoopLast = (xSeconds: number) => {
+    const to = Math.max(
+      playerRef.current?.getCurrentTime() || 0,
+      minLoopSeconds,
+    );
+    setLoopTo(to);
+    setLoopFrom(Math.max(to - xSeconds, 0));
+    setIsLooping(true);
+  };
+
+  const handleSetLoopNext = (xSeconds: number) => {
+    const from = playerRef.current?.getCurrentTime() || 0;
+    setLoopFrom(from);
+    setLoopTo(from + xSeconds);
+    setIsLooping(true);
+  };
+
+  // tap-twice - start here, end here
+  const handleSetStartLoopHere = () => {
+    setLoopFrom(playerRef.current?.getCurrentTime() || 0);
+  };
+
+  const handleSetEndLoopHere = () => {
+    setLoopTo(
+      Math.max(playerRef.current?.getCurrentTime() || 0, minLoopSeconds),
+    );
+    if (loopFrom !== null) {
+      setIsLooping(true);
+    }
+  };
+
+  const handleClearLoop = () => {
+    setLoopFrom(null);
+    setLoopTo(null);
+    setIsLooping(false);
+  };
+
+  // #endregion
+
   return (
     <div className={classes.container}>
       <div className={classes.responsiveWrapper}>
         <ReactPlayer
+          playing
+          ref={playerRef}
           url={videoUrl}
           width={"100%"}
           height={"100%"}
           controls
           playbackRate={speed}
           className={classes.player}
+          onProgress={handleProgress}
+          progressInterval={100}
+          onDuration={handleDuration}
         />
       </div>
+      <h3>Speed</h3>
       <input
         type="range"
         min="0.5"
@@ -98,6 +171,33 @@ export const VideoPlayer = () => {
         <div>90%</div>
         <div></div>
         <div>100%</div>
+      </div>
+      <h3>Looping</h3>
+      <div className={classes.loopDisplay}>
+        <div>Loop: {isLooping ? "Enabled" : "Disabled"}</div>
+        {hasValidLoopingValues && (
+          <div>
+            from: {loopFrom.toFixed(2)}s to {loopTo.toFixed(2)}s
+          </div>
+        )}
+      </div>
+      <div className={classes.loopGroup}>
+        <button onClick={() => handleSetLoopLast(20)}>Last 20s</button>
+        <button onClick={() => handleSetLoopLast(10)}>Last 10s</button>
+        <button onClick={() => handleSetLoopLast(5)}>Last 5s</button>
+        <button onClick={() => handleSetLoopNext(5)}>Next 5s</button>
+        <button onClick={() => handleSetLoopNext(10)}>Next 10s</button>
+        <button onClick={() => handleSetLoopNext(20)}>Next 20s</button>
+      </div>
+      <div className={classes.loopGroup}>
+        <button onClick={handleSetStartLoopHere}>Start here</button>
+        <button onClick={handleSetEndLoopHere}>End here</button>
+      </div>
+      <div className={classes.loopGroup}>
+        <button onClick={() => setIsLooping((x) => !x)}>
+          {isLooping ? "Disable" : "Enable"} loop
+        </button>
+        <button onClick={handleClearLoop}>Clear loop</button>
       </div>
     </div>
   );

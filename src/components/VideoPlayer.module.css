@@ -27,7 +27,7 @@
 
   /* width: calc(100% - 2.25rem); */
   width: 100%;
-  margin: 1rem 0 0 0;
+  margin: 0;
 
   /* Removes default focus */
   &:focus {
@@ -100,4 +100,46 @@
     text-align: center;
     min-width: 0;
   }
+}
+
+.loopGroup {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 100%;
+  gap: 6px;
+
+  & button {
+    text-decoration: none;
+    display: inline-block;
+    outline: 0;
+    border: 0;
+    cursor: pointer;
+    background: rgb(var(--accent-light));
+    color: #ffffff;
+    border-radius: 8px;
+    padding: 12px 12px;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 1;
+    transition:
+      transform 200ms,
+      background 200ms;
+    &:hover {
+      transform: translateY(-2px);
+    }
+  }
+}
+
+.loopDisplay {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  gap: 0.5rem;
+}
+
+h3 {
+  margin: 0;
 }
