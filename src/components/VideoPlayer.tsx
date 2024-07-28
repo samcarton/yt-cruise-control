@@ -34,7 +34,10 @@ const tryGetVideoUrl = (urlInput: string | null) => {
     return urlInput;
   }
 
-  if (urlInput.startsWith("https://youtu.be")) {
+  if (
+    urlInput.startsWith("https://youtu.be") ||
+    urlInput.startsWith("https://music.youtube.com")
+  ) {
     // regex to extract the video ID from: https://youtu.be/sjgtpKxhZa4?si=lhbg5O4yeHiABClV
     const videoId = urlInput.match(
       /(?:\?v=|&v=|youtu\.be\/)(.*?)(?:\?|$)/,
