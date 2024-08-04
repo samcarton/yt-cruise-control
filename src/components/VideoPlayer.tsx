@@ -1,7 +1,10 @@
 import { useRef, useState } from "react";
 import ReactPlayer from "react-player";
 import classes from "./VideoPlayer.module.css";
+import { PauseIcon } from "./PauseIcon";
+import { PlayIcon } from "./PlayIcon";
 
+// todo - loop params in URL
 const replaceSpeedHistory = (speed: number | string) => {
   if ("URLSearchParams" in window) {
     const url = new URL(window.location as unknown as string);
@@ -128,13 +131,42 @@ export const VideoPlayer = () => {
     setIsLooping(false);
   };
 
+  const handleBumpLoopStart = (xSeconds: number) => {
+    if (loopFrom === null) {
+      return;
+    }
+
+    const loopFromBumped = Math.max(0, loopFrom + xSeconds);
+    setLoopFrom(loopFromBumped);
+
+    playerRef.current?.seekTo(loopFromBumped);
+  };
+
+  const handleBumpLoopEnd = (xSeconds: number) => {
+    if (loopTo === null) {
+      return;
+    }
+
+    const loopToBumped = Math.max(loopFrom || 0, loopTo + xSeconds);
+    setLoopTo(loopToBumped);
+  };
+
+  // #endregion
+
+  // #region Playback
+  const [isPlaying, setIsPlaying] = useState(false);
+
+  const handleTogglePlay = () => {
+    setIsPlaying((x) => !x);
+  };
+
   // #endregion
 
   return (
     <div className={classes.container}>
       <div className={classes.responsiveWrapper}>
         <ReactPlayer
-          playing
+          playing={isPlaying}
           ref={playerRef}
           url={videoUrl}
           width={"100%"}
@@ -146,6 +178,11 @@ export const VideoPlayer = () => {
           progressInterval={100}
           onDuration={handleDuration}
         />
+      </div>
+      <div className={classes.playbackGroup}>
+        <button onClick={handleTogglePlay}>
+          {isPlaying ? <PauseIcon /> : <PlayIcon />}
+        </button>
       </div>
       <h3>Speed</h3>
       <input
@@ -182,22 +219,146 @@ export const VideoPlayer = () => {
         )}
       </div>
       <div className={classes.loopGroup}>
-        <button onClick={() => handleSetLoopLast(20)}>Last 20s</button>
-        <button onClick={() => handleSetLoopLast(10)}>Last 10s</button>
-        <button onClick={() => handleSetLoopLast(5)}>Last 5s</button>
-        <button onClick={() => handleSetLoopNext(5)}>Next 5s</button>
-        <button onClick={() => handleSetLoopNext(10)}>Next 10s</button>
-        <button onClick={() => handleSetLoopNext(20)}>Next 20s</button>
+        <button
+          className={classes.roundedButton}
+          onClick={() => handleSetLoopLast(20)}
+        >
+          Last 20s
+        </button>
+        <button
+          className={classes.roundedButton}
+          onClick={() => handleSetLoopLast(10)}
+        >
+          Last 10s
+        </button>
+        <button
+          className={classes.roundedButton}
+          onClick={() => handleSetLoopLast(5)}
+        >
+          Last 5s
+        </button>
+        <button
+          className={classes.roundedButton}
+          onClick={() => handleSetLoopNext(5)}
+        >
+          Next 5s
+        </button>
+        <button
+          className={classes.roundedButton}
+          onClick={() => handleSetLoopNext(10)}
+        >
+          Next 10s
+        </button>
+        <button
+          className={classes.roundedButton}
+          onClick={() => handleSetLoopNext(20)}
+        >
+          Next 20s
+        </button>
       </div>
       <div className={classes.loopGroup}>
-        <button onClick={handleSetStartLoopHere}>Start here</button>
-        <button onClick={handleSetEndLoopHere}>End here</button>
+        <button
+          className={classes.roundedButton}
+          onClick={handleSetStartLoopHere}
+        >
+          Start here
+        </button>
+        <button
+          className={classes.roundedButton}
+          onClick={handleSetEndLoopHere}
+        >
+          End here
+        </button>
       </div>
       <div className={classes.loopGroup}>
-        <button onClick={() => setIsLooping((x) => !x)}>
+        <button
+          className={classes.roundedButton}
+          onClick={() => setIsLooping((x) => !x)}
+        >
           {isLooping ? "Disable" : "Enable"} loop
         </button>
-        <button onClick={handleClearLoop}>Clear loop</button>
+        <button className={classes.roundedButton} onClick={handleClearLoop}>
+          Clear loop
+        </button>
+      </div>
+      <div>👉 Nudge</div>
+      <div className={classes.loopGroup}>
+        <button
+          className={classes.buttonLeft}
+          onClick={() => handleBumpLoopStart(-5)}
+        >
+          5s
+        </button>
+        <button
+          className={classes.buttonLeft}
+          onClick={() => handleBumpLoopStart(-2)}
+        >
+          2s
+        </button>
+        <button
+          className={classes.buttonLeft}
+          onClick={() => handleBumpLoopStart(-1)}
+        >
+          1s
+        </button>
+        start
+        <button
+          className={classes.buttonRight}
+          onClick={() => handleBumpLoopStart(1)}
+        >
+          1s
+        </button>
+        <button
+          className={classes.buttonRight}
+          onClick={() => handleBumpLoopStart(2)}
+        >
+          2s
+        </button>
+        <button
+          className={classes.buttonRight}
+          onClick={() => handleBumpLoopStart(5)}
+        >
+          5s
+        </button>
+      </div>
+      <div className={classes.loopGroup}>
+        <button
+          className={classes.buttonLeft}
+          onClick={() => handleBumpLoopEnd(-5)}
+        >
+          5s
+        </button>
+        <button
+          className={classes.buttonLeft}
+          onClick={() => handleBumpLoopEnd(-2)}
+        >
+          2s
+        </button>
+        <button
+          className={classes.buttonLeft}
+          onClick={() => handleBumpLoopEnd(-1)}
+        >
+          1s
+        </button>
+        end
+        <button
+          className={classes.buttonRight}
+          onClick={() => handleBumpLoopEnd(1)}
+        >
+          1s
+        </button>
+        <button
+          className={classes.buttonRight}
+          onClick={() => handleBumpLoopEnd(2)}
+        >
+          2s
+        </button>
+        <button
+          className={classes.buttonRight}
+          onClick={() => handleBumpLoopEnd(5)}
+        >
+          5s
+        </button>
       </div>
     </div>
   );
