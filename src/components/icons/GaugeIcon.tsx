@@ -1,5 +1,3 @@
-import classes from "./GaugeIcon.module.css";
-
 export const GaugeIcon = () => {
   return (
     <svg
@@ -9,10 +7,10 @@ export const GaugeIcon = () => {
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
-      stroke-width="2"
-      stroke-linecap="round"
-      stroke-linejoin="round"
-      className={classes.gauge}
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      color="currentColor"
     >
       <path d="m12 14 4-4" />
       <path d="M3.34 19a10 10 0 1 1 17.32 0" />

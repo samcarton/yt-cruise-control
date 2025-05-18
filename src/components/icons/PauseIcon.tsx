@@ -1,5 +1,3 @@
-import classes from "./PauseIcon.module.css";
-
 export const PauseIcon = () => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
@@ -11,7 +9,7 @@ export const PauseIcon = () => (
     stroke-width="2"
     stroke-linecap="round"
     stroke-linejoin="round"
-    className={classes.pause}
+    color="currentColor"
   >
     <rect x="14" y="4" width="4" height="16" rx="1" />
     <rect x="6" y="4" width="4" height="16" rx="1" />

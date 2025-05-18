@@ -1,5 +1,3 @@
-import classes from "./PlayIcon.module.css";
-
 export const PlayIcon = () => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
@@ -11,7 +9,7 @@ export const PlayIcon = () => (
     stroke-width="2"
     stroke-linecap="round"
     stroke-linejoin="round"
-    className={classes.play}
+    color="currentColor"
   >
     <polygon points="6 3 20 12 6 21 6 3" />
   </svg>

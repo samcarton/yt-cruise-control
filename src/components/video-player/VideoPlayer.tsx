@@ -1,10 +1,10 @@
 import { useRef, useState } from "react";
 import ReactPlayer from "react-player";
 import classes from "./VideoPlayer.module.css";
-import { PauseIcon } from "./PauseIcon";
-import { PlayIcon } from "./PlayIcon";
-import { LoopMan } from "../modules/loops/LoopMan";
-import { RoundedButton } from "./buttons/RoundedButton";
+import { PauseIcon } from "../icons/PauseIcon";
+import { PlayIcon } from "../icons/PlayIcon";
+import { LoopMan } from "../../modules/loops/LoopMan";
+import { RoundedButton } from "../buttons/RoundedButton";
 
 // todo - loop params in URL
 const replaceSpeedHistory = (speed: number | string) => {
