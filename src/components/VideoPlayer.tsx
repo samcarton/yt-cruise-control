@@ -3,6 +3,8 @@ import ReactPlayer from "react-player";
 import classes from "./VideoPlayer.module.css";
 import { PauseIcon } from "./PauseIcon";
 import { PlayIcon } from "./PlayIcon";
+import { LoopMan } from "../modules/loops/LoopMan";
+import { RoundedButton } from "./buttons/RoundedButton";
 
 // todo - loop params in URL
 const replaceSpeedHistory = (speed: number | string) => {
@@ -177,6 +179,7 @@ export const VideoPlayer = () => {
           onProgress={handleProgress}
           progressInterval={100}
           onDuration={handleDuration}
+          onReady={(p) => console.log({ duration: p.getDuration() })}
         />
       </div>
       <div className={classes.playbackGroup}>
@@ -219,67 +222,36 @@ export const VideoPlayer = () => {
         )}
       </div>
       <div className={classes.loopGroup}>
-        <button
-          className={classes.roundedButton}
-          onClick={() => handleSetLoopLast(20)}
-        >
+        <RoundedButton onClick={() => handleSetLoopLast(20)}>
           Last 20s
-        </button>
-        <button
-          className={classes.roundedButton}
-          onClick={() => handleSetLoopLast(10)}
-        >
+        </RoundedButton>
+        <RoundedButton onClick={() => handleSetLoopLast(10)}>
           Last 10s
-        </button>
-        <button
-          className={classes.roundedButton}
-          onClick={() => handleSetLoopLast(5)}
-        >
+        </RoundedButton>
+        <RoundedButton onClick={() => handleSetLoopLast(5)}>
           Last 5s
-        </button>
-        <button
-          className={classes.roundedButton}
-          onClick={() => handleSetLoopNext(5)}
-        >
+        </RoundedButton>
+        <RoundedButton onClick={() => handleSetLoopNext(5)}>
           Next 5s
-        </button>
-        <button
-          className={classes.roundedButton}
-          onClick={() => handleSetLoopNext(10)}
-        >
+        </RoundedButton>
+        <RoundedButton onClick={() => handleSetLoopNext(10)}>
           Next 10s
-        </button>
-        <button
-          className={classes.roundedButton}
-          onClick={() => handleSetLoopNext(20)}
-        >
+        </RoundedButton>
+        <RoundedButton onClick={() => handleSetLoopNext(20)}>
           Next 20s
-        </button>
+        </RoundedButton>
       </div>
       <div className={classes.loopGroup}>
-        <button
-          className={classes.roundedButton}
-          onClick={handleSetStartLoopHere}
-        >
+        <RoundedButton onClick={handleSetStartLoopHere}>
           Start here
-        </button>
-        <button
-          className={classes.roundedButton}
-          onClick={handleSetEndLoopHere}
-        >
-          End here
-        </button>
+        </RoundedButton>
+        <RoundedButton onClick={handleSetEndLoopHere}>End here</RoundedButton>
       </div>
       <div className={classes.loopGroup}>
-        <button
-          className={classes.roundedButton}
-          onClick={() => setIsLooping((x) => !x)}
-        >
+        <RoundedButton onClick={() => setIsLooping((x) => !x)}>
           {isLooping ? "Disable" : "Enable"} loop
-        </button>
-        <button className={classes.roundedButton} onClick={handleClearLoop}>
-          Clear loop
-        </button>
+        </RoundedButton>
+        <RoundedButton onClick={handleClearLoop}>Clear loop</RoundedButton>
       </div>
       <div>👉 Nudge</div>
       <div className={classes.loopGroup}>
@@ -360,6 +332,7 @@ export const VideoPlayer = () => {
           5s
         </button>
       </div>
+      <LoopMan videoUrl={videoUrl} />
     </div>
   );
 };
