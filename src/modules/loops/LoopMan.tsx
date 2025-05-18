@@ -22,3 +22,7 @@ export const LoopMan = ({ videoUrl }: Props) => {
     </>
   );
 };
+
+// todo - move other loop controls
+// todo - edit name, delete loop
+// todo - loop history, undo, redo?

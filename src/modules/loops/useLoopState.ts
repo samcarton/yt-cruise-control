@@ -8,6 +8,9 @@ interface Props {
 }
 
 export const useLoopState = ({ videoUrl }: Props) => {
+  // todo - loop edit history - stack per loop per session?
+  // todo - disconnect loopstate from localstorage - opt-in to save?
+
   const [loopCollection, setLoopCollection] = useState<loopCollection>(
     loopStore.getLoopCollection(videoUrl),
   );
